@@ -86,13 +86,13 @@
 
 > 深入每個核心元件的細節
 
-### Use case: User connects to a financial account
+### 使用案例：使用者連接到一個財務帳戶
 
-We could store info on the 10 million users in a [relational database](https://github.com/donnemartin/system-design-primer#relational-database-management-system-rdbms).  We should discuss the [use cases and tradeoffs between choosing SQL or NoSQL](https://github.com/donnemartin/system-design-primer#sql-or-nosql).
+我們可以在 [關連式資料庫](https://github.com/kevingo/system-design-primer-zh-tw/blob/master/README-zh-TW.md#%E9%97%9C%E9%80%A3%E5%BC%8F%E8%B3%87%E6%96%99%E5%BA%AB%E7%AE%A1%E7%90%86%E7%B3%BB%E7%B5%B1rdbms) 中為 1000 萬名使用者儲存相關資料。我們應該要進行 [SQL 或 NoSQL 的相關使用案例](https://github.com/kevingo/system-design-primer-zh-tw/blob/master/README-zh-TW.md#sql-%E6%88%96-nosql) 討論。
 
-* The **Client** sends a request to the **Web Server**, running as a [reverse proxy](https://github.com/donnemartin/system-design-primer#reverse-proxy-web-server)
-* The **Web Server** forwards the request to the **Accounts API** server
-* The **Accounts API** server updates the **SQL Database** `accounts` table with the newly entered account info
+* **客戶端** 發出一個請求到 **網頁伺服器** 上，這個伺服器是一個 [反向代理伺服器](https://github.com/kevingo/system-design-primer-zh-tw/blob/master/README-zh-TW.md#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E7%B6%B2%E9%A0%81%E4%BC%BA%E6%9C%8D%E5%99%A8)。
+* **網頁伺服器**會轉送請求到**帳戶 API 伺服器**。
+* **帳戶 API 伺服器**更新 **SQL 資料庫**的 `accounts` 資料表中的相關資訊。
 
 **Clarify with your interviewer how much code you are expected to write**.
 
