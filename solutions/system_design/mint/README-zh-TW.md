@@ -94,9 +94,9 @@
 * **網頁伺服器**會轉送請求到**帳戶 API 伺服器**。
 * **帳戶 API 伺服器**更新 **SQL 資料庫**的 `accounts` 資料表中的相關資訊。
 
-**Clarify with your interviewer how much code you are expected to write**.
+**向你的面試者詢問他預期你的程式碼要寫到什麼程度**.
 
-The `accounts` table could have the following structure:
+`accounts` 資料表包含以下結構：
 
 ```
 id int NOT NULL AUTO_INCREMENT
@@ -110,9 +110,9 @@ PRIMARY KEY(id)
 FOREIGN KEY(user_id) REFERENCES users(id)
 ```
 
-We'll create an [index](https://github.com/donnemartin/system-design-primer#use-good-indices) on `id`, `user_id `, and `created_at` to speed up lookups (log-time instead of scanning the entire table) and to keep the data in memory.  Reading 1 MB sequentially from memory takes about 250 microseconds, while reading from SSD takes 4x and from disk takes 80x longer.<sup><a href=https://github.com/donnemartin/system-design-primer#latency-numbers-every-programmer-should-know>1</a></sup>
+我們會在 `id`、`user_id` 和 `created_at` 三個欄位建立 [索引](https://github.com/kevingo/system-design-primer-zh-tw/blob/master/README-zh-TW.md#%E4%BD%BF%E7%94%A8%E6%AD%A3%E7%A2%BA%E7%9A%84%E7%B4%A2%E5%BC%95) 來增加讀取速度 (log-time 的讀取時間，而不是掃描整張資料表)，同時確保資料會被保存在記憶體中。從記憶體中循序讀取 1MB 的資料大約需要 250 毫秒，但相同的資料，從 SSD 大概需要四倍以上的時間，而一般的硬碟則需要八十倍以上的時間<sup><a href=https://github.com/kevingo/system-design-primer-zh-tw/blob/master/README-zh-TW.md#%E6%AF%8F%E5%80%8B%E9%96%8B%E7%99%BC%E8%80%85%E9%83%BD%E6%87%89%E8%A9%B2%E7%9F%A5%E9%81%93%E7%9A%84%E5%BB%B6%E9%81%B2%E6%95%B8%E9%87%8F%E7%B4%9A>1</a></sup>。
 
-We'll use a public [**REST API**](https://github.com/donnemartin/system-design-primer#representational-state-transfer-rest):
+我們會使用公開的 [**REST API**](https://github.com/kevingo/system-design-primer-zh-tw/blob/master/README-zh-TW.md#%E5%85%B7%E8%B1%A1%E7%8B%80%E6%85%8B%E8%BD%89%E7%A7%BB-rest)：
 
 ```
 $ curl -X POST --data '{ "user_id": "foo", "account_url": "bar", \
@@ -120,9 +120,9 @@ $ curl -X POST --data '{ "user_id": "foo", "account_url": "bar", \
     https://mint.com/api/v1/account
 ```
 
-For internal communications, we could use [Remote Procedure Calls](https://github.com/donnemartin/system-design-primer#remote-procedure-call-rpc).
+內部通訊上，我們可以使用 [遠端程式呼叫](https://github.com/kevingo/system-design-primer-zh-tw/blob/master/README-zh-TW.md#%E9%81%A0%E7%AB%AF%E7%A8%8B%E5%BC%8F%E5%91%BC%E5%8F%AB-rpc) 的方式。
 
-Next, the service extracts transactions from the account.
+下一步，我們的服務會從帳戶中取出交易資訊。
 
 ### Use case: Service extracts transactions from the account
 
