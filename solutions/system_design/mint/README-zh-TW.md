@@ -120,9 +120,9 @@ $ curl -X POST --data '{ "user_id": "foo", "account_url": "bar", \
     https://mint.com/api/v1/account
 ```
 
-內部通訊上，我們可以使用 [遠端程式呼叫](https://github.com/kevingo/system-design-primer-zh-tw/blob/master/README-zh-TW.md#%E9%81%A0%E7%AB%AF%E7%A8%8B%E5%BC%8F%E5%91%BC%E5%8F%AB-rpc) 的方式。
+內部通訊上，我們可以使用 [遠端程式呼叫](https://github.com/kevingo/system-design-primer-zh-tw/blob/master/README-zh-TW.md#%E9%81%A0%E7%AB%AF%E7%A8%8B%E5%BC%8F%E5%91%BC%E5%8F%AB-rpc) 的方式。
 
-下一步，我們的服務會從帳戶中取出交易資訊。
+下一步，我們的服務會從帳戶中取出交易資訊。
 
 ### 使用案例：服務從帳戶中取出交易資訊
 
@@ -132,17 +132,17 @@ We'll want to extract information from an account in these cases:
 * The user manually refreshes the account
 * Automatically each day for users who have been active in the past 30 days
 
-我們希望從帳戶中取出以下使用情境的資訊：
+我們希望從帳戶中取出以下使用情境的資訊：
 
 * 使用者第一次連接到帳戶
 * 使用者手動更新帳戶內容
-* 對於過去 30 天內持續活躍的使用者，每天自動的取得資訊
+* 對於過去 30 天內持續活躍的使用者，每天自動的取得資訊
 
 資料流：
 
 * **客戶端**發送請求到**網頁伺服器**。
 * **網頁伺服器**轉發請求到**帳戶 API 伺服器**。
-* **帳戶 API 伺服器**發送一個工作到**佇列**中，例如：Amazon 的 SQS 或 [RabbitMQ](https://www.rabbitmq.com/)。
+* **帳戶 API 伺服器**發送一個工作到**佇列**中，例如：Amazon 的 SQS 或 [RabbitMQ](https://www.rabbitmq.com/)。
     * 擷取交易資料可能會花一些時間，我們可能希望採用 [異步處理加上佇列](https://github.com/kevingo/system-design-primer-zh-tw/blob/master/README-zh-TW.md#%E9%9D%9E%E5%90%8C%E6%AD%A5%E6%A9%9F%E5%88%B6) 的機制來進行，即使這可能會增加額外的複雜度。
 * 這個**交易資訊擷取的服務**包含以下內容：
     * 從**佇列**中取出工作，並針對帳戶擷取交易資訊，將結果視為原始日誌檔案存到**物件資料庫**中。
